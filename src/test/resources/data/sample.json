@@ -1,0 +1,28 @@
+[
+  {
+    "id": "t_1",
+    "title": "First Talk",
+    "description": "This is the First Talk!",
+    "speaker": "u_1",
+    "createdAt": "2022-01-05T16:28:14.679266200Z",
+    "updatedAt": "2022-01-05T16:28:14.679266200Z",
+    "deletedAt": null,
+    "planedStartTime": "1970-01-01T00:00:00Z",
+    "planedDuration": "PT30M",
+    "startedAt": null,
+    "endedAt": null
+  },
+  {
+    "id": "t_2",
+    "title": "Second Talk",
+    "description": "This is the Second Talk!",
+    "speaker": "u_2",
+    "createdAt": "2022-01-05T16:28:14.679266200Z",
+    "updatedAt": "2022-01-05T16:28:14.679266200Z",
+    "deletedAt": null,
+    "planedStartTime": "1970-01-02T00:00:00Z",
+    "planedDuration": "PT1H",
+    "startedAt": null,
+    "endedAt": null
+  }
+]
