@@ -1,6 +1,7 @@
 package io.github.mojtab32.talks.controllers;
 
 import io.github.mojtab32.talks.dtos.RegisterUserDto;
+import io.github.mojtab32.talks.dtos.UserDto;
 import io.github.mojtab32.talks.services.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,14 @@ public class UsersController {
 
     }
 
+    @GetMapping("/users/{id}")
+    public ResponseEntity<UserDto> getUser(@PathVariable String id) {
+        final UserDto user = usersService.getUser(id);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)

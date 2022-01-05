@@ -2,6 +2,7 @@ package io.github.mojtab32.talks.services.impl;
 
 import io.github.mojtab32.talks.domains.User;
 import io.github.mojtab32.talks.dtos.RegisterUserDto;
+import io.github.mojtab32.talks.dtos.UserDto;
 import io.github.mojtab32.talks.repositories.UsersRepository;
 import io.github.mojtab32.talks.services.UsersService;
 import org.slf4j.Logger;
@@ -27,6 +28,11 @@ public class UsersServiceImpl implements UsersService {
             e.printStackTrace();
             log.warn("error in saving a user",e);
         }
+        return null;
+    }
+
+    @Override
+    public UserDto getUser(String id) {
         return null;
     }
 

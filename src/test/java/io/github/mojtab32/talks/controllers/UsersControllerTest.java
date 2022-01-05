@@ -2,6 +2,7 @@ package io.github.mojtab32.talks.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mojtab32.talks.dtos.RegisterUserDto;
+import io.github.mojtab32.talks.dtos.UserDto;
 import io.github.mojtab32.talks.services.UsersService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -71,6 +72,33 @@ class UsersControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(jsonPath("$['name']", is("Name is mandatory")))
                 .andExpect(jsonPath("$.*", hasSize(1)))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetUser() throws Exception {
+        Set<String> roles = new HashSet<>(Arrays.asList("Admin", "Attendee", "Speaker"));
+
+
+        final UserDto user = new UserDto("u_1", "Mojtaba", roles);
+
+        final String body = mapper.writeValueAsString(user);
+
+        when(usersService.getUser("u_1")).thenReturn(user);
+
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/u_1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(body))
+                .andDo(print());
+    }
+    @DisplayName("get user returns not found when user not exists")
+    @Test
+    void testGetUserNotFound() throws Exception {
+        when(usersService.getUser("u_not")).thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/u_not").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(print());
     }
 }
