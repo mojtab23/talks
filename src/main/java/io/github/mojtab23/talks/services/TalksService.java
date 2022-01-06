@@ -1,11 +1,11 @@
 package io.github.mojtab23.talks.services;
 
 import io.github.mojtab23.talks.domains.Talk;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TalksService {
 
-    List<Talk> getAllTalks();
+    Page<Talk> getAllTalks(Pageable pageable);
 
 }

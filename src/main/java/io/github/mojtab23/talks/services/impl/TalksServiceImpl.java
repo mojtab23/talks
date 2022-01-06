@@ -1,15 +1,23 @@
 package io.github.mojtab23.talks.services.impl;
 
 import io.github.mojtab23.talks.domains.Talk;
+import io.github.mojtab23.talks.repositories.TalksRepository;
 import io.github.mojtab23.talks.services.TalksService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class TalksServiceImpl implements TalksService {
+
+    private final TalksRepository talksRepository;
+
+    public TalksServiceImpl(TalksRepository talksRepository) {
+        this.talksRepository = talksRepository;
+    }
+
     @Override
-    public List<Talk> getAllTalks() {
-        return null;
+    public Page<Talk> getAllTalks(Pageable pageable) {
+        return talksRepository.findAll(pageable);
     }
 }
