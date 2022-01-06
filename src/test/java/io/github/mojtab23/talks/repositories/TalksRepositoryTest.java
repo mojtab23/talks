@@ -2,20 +2,20 @@ package io.github.mojtab23.talks.repositories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mojtab23.talks.domains.Talk;
-import io.github.mojtab23.talks.services.TalksService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,8 +33,6 @@ class TalksRepositoryTest {
     @Autowired
     private TalksRepository talksRepository;
 
-    @MockBean
-    private TalksService talksService;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -51,7 +49,20 @@ class TalksRepositoryTest {
     @Test
     void testFindAll() {
         final List<Talk> talks = talksRepository.findAll();
-        assertEquals(2, talks.size(), "Should be two talks in the database");
+        assertEquals(3, talks.size(), "Should be 3 talks in the database");
+    }
+
+    @Test
+    void testFindTalksBetweenDates() {
+        final List<Talk> talks = talksRepository.findTalksBetween(Instant.EPOCH, Instant.EPOCH.plus(1, ChronoUnit.HOURS));
+        assertEquals(1, talks.size(), "Should be one talk in the database");
+        assertEquals("t_1", talks.get(0).getId());
+    }
+
+    @Test
+    void testSpeakerHasOverlappingTalks() {
+        final Integer count = talksRepository.countSpeakersOverlapingTalks("u_1", Instant.EPOCH, Instant.EPOCH.plus(1, ChronoUnit.DAYS));
+        assertEquals(2, count, "Should be 2 overlapping talk");
     }
 
 }

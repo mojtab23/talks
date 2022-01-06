@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -44,12 +43,12 @@ class TalksControllerTest {
         List<TalkDto> talkList = new ArrayList<>();
 
         final TalkDto firstTalk = new TalkDto("First Talk", "This is the First Talk!", "1",
-                Instant.EPOCH, Duration.of(30, ChronoUnit.MINUTES)
+                Instant.EPOCH, Instant.EPOCH.plus(30, ChronoUnit.MINUTES)
         );
         firstTalk.setId("t_1");
         talkList.add(firstTalk);
         final TalkDto secondTalk = new TalkDto("Second Talk", "This is the Second Talk!", "2",
-                Instant.EPOCH.plus(1, ChronoUnit.DAYS), Duration.of(1, ChronoUnit.HOURS)
+                Instant.EPOCH.plus(1, ChronoUnit.DAYS), Instant.EPOCH.plus(1, ChronoUnit.HOURS)
         );
         secondTalk.setId("t_2");
         talkList.add(secondTalk);

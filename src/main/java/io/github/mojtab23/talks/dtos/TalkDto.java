@@ -2,7 +2,6 @@ package io.github.mojtab23.talks.dtos;
 
 import io.github.mojtab23.talks.domains.Talk;
 
-import java.time.Duration;
 import java.time.Instant;
 
 public class TalkDto {
@@ -15,14 +14,14 @@ public class TalkDto {
     private Instant updatedAt;
     private Instant deletedAt;
     private Instant planedStartTime;
-    private Duration planedDuration;
+    private Instant planedEndTime;
     private Instant startedAt;
     private Instant endedAt;
 
     public TalkDto() {
     }
 
-    public TalkDto(String title, String description, String speakerId, Instant planedStartTime, Duration planedDuration) {
+    public TalkDto(String title, String description, String speakerId, Instant planedStartTime, Instant planedEndTime) {
         this.title = title;
         this.description = description;
         this.speakerId = speakerId;
@@ -31,14 +30,14 @@ public class TalkDto {
         this.updatedAt = now;
         this.deletedAt = null;
         this.planedStartTime = planedStartTime;
-        this.planedDuration = planedDuration;
+        this.planedEndTime = planedEndTime;
         this.startedAt = null;
         this.endedAt = null;
     }
 
     public TalkDto(
             String id, String title, String description, String speakerId, Instant createdAt, Instant updatedAt,
-            Instant deletedAt, Instant planedStartTime, Duration planedDuration, Instant startedAt, Instant endedAt
+            Instant deletedAt, Instant planedStartTime, Instant planedEndTime, Instant startedAt, Instant endedAt
     ) {
         this.id = id;
         this.title = title;
@@ -48,7 +47,7 @@ public class TalkDto {
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
         this.planedStartTime = planedStartTime;
-        this.planedDuration = planedDuration;
+        this.planedEndTime = planedEndTime;
         this.startedAt = startedAt;
         this.endedAt = endedAt;
     }
@@ -63,7 +62,7 @@ public class TalkDto {
                 t.getUpdatedAt(),
                 t.getDeletedAt(),
                 t.getPlanedStartTime(),
-                t.getPlanedDuration(),
+                t.getPlanedEndTime(),
                 t.getStartedAt(),
                 t.getEndedAt()
         );
@@ -133,12 +132,12 @@ public class TalkDto {
         this.planedStartTime = planedStartTime;
     }
 
-    public Duration getPlanedDuration() {
-        return planedDuration;
+    public Instant getPlanedEndTime() {
+        return planedEndTime;
     }
 
-    public void setPlanedDuration(Duration planedDuration) {
-        this.planedDuration = planedDuration;
+    public void setPlanedEndTime(Instant planedEndTime) {
+        this.planedEndTime = planedEndTime;
     }
 
     public Instant getStartedAt() {

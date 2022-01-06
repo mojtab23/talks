@@ -3,7 +3,6 @@ package io.github.mojtab23.talks.domains;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Duration;
 import java.time.Instant;
 
 @Document
@@ -18,14 +17,14 @@ public class Talk {
     private Instant updatedAt;
     private Instant deletedAt;
     private Instant planedStartTime;
-    private Duration planedDuration;
+    private Instant planedEndTime;
     private Instant startedAt;
     private Instant endedAt;
 
     public Talk() {
     }
 
-    public Talk(String title, String description, String speakerId, Instant planedStartTime, Duration planedDuration) {
+    public Talk(String title, String description, String speakerId, Instant planedStartTime, Instant planedEndTime) {
         this.title = title;
         this.description = description;
         this.speakerId = speakerId;
@@ -34,14 +33,14 @@ public class Talk {
         this.updatedAt = now;
         this.deletedAt = null;
         this.planedStartTime = planedStartTime;
-        this.planedDuration = planedDuration;
+        this.planedEndTime = planedEndTime;
         this.startedAt = null;
         this.endedAt = null;
     }
 
     public Talk(
             String id, String title, String description, String speakerId, Instant createdAt, Instant updatedAt,
-            Instant deletedAt, Instant planedStartTime, Duration planedDuration, Instant startedAt, Instant endedAt
+            Instant deletedAt, Instant planedStartTime, Instant planedEndTime, Instant startedAt, Instant endedAt
     ) {
         this.id = id;
         this.title = title;
@@ -51,7 +50,7 @@ public class Talk {
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
         this.planedStartTime = planedStartTime;
-        this.planedDuration = planedDuration;
+        this.planedEndTime = planedEndTime;
         this.startedAt = startedAt;
         this.endedAt = endedAt;
     }
@@ -120,12 +119,12 @@ public class Talk {
         this.planedStartTime = planedStartTime;
     }
 
-    public Duration getPlanedDuration() {
-        return planedDuration;
+    public Instant getPlanedEndTime() {
+        return planedEndTime;
     }
 
-    public void setPlanedDuration(Duration planedDuration) {
-        this.planedDuration = planedDuration;
+    public void setPlanedEndTime(Instant planedEndTime) {
+        this.planedEndTime = planedEndTime;
     }
 
     public Instant getStartedAt() {
@@ -150,12 +149,12 @@ public class Talk {
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", speaker='" + speakerId + '\'' +
+                ", speakerId='" + speakerId + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", deletedAt=" + deletedAt +
                 ", planedStartTime=" + planedStartTime +
-                ", planedDuration=" + planedDuration +
+                ", planedEndTime=" + planedEndTime +
                 ", startedAt=" + startedAt +
                 ", endedAt=" + endedAt +
                 '}';
