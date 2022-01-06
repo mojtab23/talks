@@ -1,14 +1,11 @@
-package io.github.mojtab23.talks.domains;
+package io.github.mojtab23.talks.dtos;
 
-
-import org.springframework.data.mongodb.core.mapping.Document;
+import io.github.mojtab23.talks.domains.Talk;
 
 import java.time.Duration;
 import java.time.Instant;
 
-@Document
-public class Talk {
-
+public class TalkDto {
     private String id;
     private String title;
     private String description;
@@ -22,10 +19,10 @@ public class Talk {
     private Instant startedAt;
     private Instant endedAt;
 
-    public Talk() {
+    public TalkDto() {
     }
 
-    public Talk(String title, String description, String speakerId, Instant planedStartTime, Duration planedDuration) {
+    public TalkDto(String title, String description, String speakerId, Instant planedStartTime, Duration planedDuration) {
         this.title = title;
         this.description = description;
         this.speakerId = speakerId;
@@ -39,7 +36,7 @@ public class Talk {
         this.endedAt = null;
     }
 
-    public Talk(
+    public TalkDto(
             String id, String title, String description, String speakerId, Instant createdAt, Instant updatedAt,
             Instant deletedAt, Instant planedStartTime, Duration planedDuration, Instant startedAt, Instant endedAt
     ) {
@@ -54,6 +51,22 @@ public class Talk {
         this.planedDuration = planedDuration;
         this.startedAt = startedAt;
         this.endedAt = endedAt;
+    }
+
+    public static TalkDto fromTalk(Talk t) {
+        return new TalkDto(
+                t.getId(),
+                t.getTitle(),
+                t.getDescription(),
+                t.getSpeakerId(),
+                t.getCreatedAt(),
+                t.getUpdatedAt(),
+                t.getDeletedAt(),
+                t.getPlanedStartTime(),
+                t.getPlanedDuration(),
+                t.getStartedAt(),
+                t.getEndedAt()
+        );
     }
 
     public String getId() {
@@ -144,20 +157,4 @@ public class Talk {
         this.endedAt = endedAt;
     }
 
-    @Override
-    public String toString() {
-        return "Talk{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", speaker='" + speakerId + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", deletedAt=" + deletedAt +
-                ", planedStartTime=" + planedStartTime +
-                ", planedDuration=" + planedDuration +
-                ", startedAt=" + startedAt +
-                ", endedAt=" + endedAt +
-                '}';
-    }
 }

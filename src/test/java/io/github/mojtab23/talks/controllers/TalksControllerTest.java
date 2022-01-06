@@ -1,6 +1,6 @@
 package io.github.mojtab23.talks.controllers;
 
-import io.github.mojtab23.talks.domains.Talk;
+import io.github.mojtab23.talks.dtos.TalkDto;
 import io.github.mojtab23.talks.services.TalksService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -41,14 +41,14 @@ class TalksControllerTest {
 
     @Test
     void getAllTalks() throws Exception {
-        List<Talk> talkList = new ArrayList<>();
+        List<TalkDto> talkList = new ArrayList<>();
 
-        final Talk firstTalk = new Talk("First Talk", "This is the First Talk!", "1",
+        final TalkDto firstTalk = new TalkDto("First Talk", "This is the First Talk!", "1",
                 Instant.EPOCH, Duration.of(30, ChronoUnit.MINUTES)
         );
         firstTalk.setId("t_1");
         talkList.add(firstTalk);
-        final Talk secondTalk = new Talk("Second Talk", "This is the Second Talk!", "2",
+        final TalkDto secondTalk = new TalkDto("Second Talk", "This is the Second Talk!", "2",
                 Instant.EPOCH.plus(1, ChronoUnit.DAYS), Duration.of(1, ChronoUnit.HOURS)
         );
         secondTalk.setId("t_2");
