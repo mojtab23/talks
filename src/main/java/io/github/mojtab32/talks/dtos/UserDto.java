@@ -1,5 +1,8 @@
 package io.github.mojtab32.talks.dtos;
 
+import io.github.mojtab32.talks.domains.User;
+
+import java.util.Objects;
 import java.util.Set;
 
 public class UserDto {
@@ -14,6 +17,10 @@ public class UserDto {
         this.id = id;
         this.name = name;
         this.roles = roles;
+    }
+
+    public static UserDto fromUser(User u) {
+        return new UserDto(u.getId(), u.getName(), u.getRoles());
     }
 
     public String getId() {
@@ -38,5 +45,18 @@ public class UserDto {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return id.equals(userDto.id) && name.equals(userDto.name) && Objects.equals(roles, userDto.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, roles);
     }
 }

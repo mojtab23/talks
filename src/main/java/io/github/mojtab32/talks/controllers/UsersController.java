@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -40,6 +41,12 @@ public class UsersController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        final List<UserDto> users = usersService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
