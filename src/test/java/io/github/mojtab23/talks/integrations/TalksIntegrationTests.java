@@ -171,7 +171,9 @@ public class TalksIntegrationTests {
         assertThat(entity.getBody()[0].getId()).contains("t_1");
 
 
-    }    @Test
+    }
+
+    @Test
     void searchTalksFindNone() {
 
 
