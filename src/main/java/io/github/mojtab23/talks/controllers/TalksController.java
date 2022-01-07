@@ -10,9 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Optional;
 
@@ -58,6 +60,14 @@ public class TalksController {
             return ResponseEntity.badRequest().body("can't insert the talk");
         } else return ResponseEntity.created(URI.create("/talks/" + talkId)).build();
 
+    }
+
+    @PostMapping("/talks/{id}/subscribers")
+    public ResponseEntity subscribeTalk(@PathVariable("id") String talkId, @RequestBody @NotBlank String attendeeId) {
+        final String subscriptionId = talksService.subscribeToTalk(talkId, attendeeId);
+        if (subscriptionId == null) {
+            return ResponseEntity.badRequest().body("can't subscribe to the talk");
+        } else return ResponseEntity.ok(Collections.singletonMap("subscriptionId", subscriptionId));
     }
 
 }

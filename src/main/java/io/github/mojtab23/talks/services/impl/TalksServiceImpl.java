@@ -1,10 +1,12 @@
 package io.github.mojtab23.talks.services.impl;
 
+import io.github.mojtab23.talks.domains.Subscription;
 import io.github.mojtab23.talks.domains.Talk;
 import io.github.mojtab23.talks.domains.UserRole;
 import io.github.mojtab23.talks.dtos.RegisterTalkDto;
 import io.github.mojtab23.talks.dtos.TalkDto;
 import io.github.mojtab23.talks.dtos.UserDto;
+import io.github.mojtab23.talks.repositories.SubscriptionsRepository;
 import io.github.mojtab23.talks.repositories.TalksRepository;
 import io.github.mojtab23.talks.services.TalksService;
 import io.github.mojtab23.talks.services.UsersService;
@@ -20,10 +22,12 @@ import java.util.Optional;
 public class TalksServiceImpl implements TalksService {
 
     private final TalksRepository talksRepository;
+    private final SubscriptionsRepository subscriptionsRepository;
     private final UsersService usersService;
 
-    public TalksServiceImpl(TalksRepository talksRepository, UsersService usersService) {
+    public TalksServiceImpl(TalksRepository talksRepository, SubscriptionsRepository subscriptionsRepository, UsersService usersService) {
         this.talksRepository = talksRepository;
+        this.subscriptionsRepository = subscriptionsRepository;
         this.usersService = usersService;
     }
 
@@ -42,7 +46,7 @@ public class TalksServiceImpl implements TalksService {
     public String registerTalk(RegisterTalkDto dto) {
         final Talk talk = dto.toTalk();
 
-        if (!userHasRoles(talk.getSpeakerId())) {
+        if (!userHasRolesForRegisteringTalk(talk.getSpeakerId())) {
             return null;
         }
 
@@ -55,10 +59,17 @@ public class TalksServiceImpl implements TalksService {
         return savedTalk.getId();
     }
 
-    private boolean userHasRoles(String speakerId) {
+    private boolean userHasRolesForRegisteringTalk(String speakerId) {
         final Optional<UserDto> user = usersService.getUser(speakerId);
         return user
                 .map(userDto -> userDto.getRoles().contains(UserRole.ADMIN) || userDto.getRoles().contains(UserRole.SPEAKER))
+                .orElse(false);
+    }
+
+    private boolean userHasRolesForAttendingTalk(String attendeeId) {
+        final Optional<UserDto> user = usersService.getUser(attendeeId);
+        return user
+                .map(userDto -> userDto.getRoles().contains(UserRole.ATTENDEE))
                 .orElse(false);
     }
 
@@ -66,5 +77,31 @@ public class TalksServiceImpl implements TalksService {
     public Optional<TalkDto> getTalkById(String id) {
         final Optional<Talk> talkOp = talksRepository.findById(id);
         return talkOp.map(TalkDto::fromTalk);
+    }
+
+    @Transactional
+    @Override
+    public String subscribeToTalk(String talkId, String attendeeId) {
+        if (!userHasRolesForAttendingTalk(attendeeId)) {
+            return null;
+        }
+
+        final Instant now = Instant.now();
+        if (!checkIfTalkAcceptsSubscriptions(talkId, attendeeId, now)) {
+            return null;
+        }
+
+        final Subscription subscription = new Subscription(null, attendeeId, talkId, now, null);
+        final Subscription savedSubscription = subscriptionsRepository.save(subscription);
+        return savedSubscription.getId();
+    }
+
+    private boolean checkIfTalkAcceptsSubscriptions(String talkId, String attendeeId, Instant subscriptionTime) {
+        final Optional<Talk> talk = talksRepository.findById(talkId);
+        return talk
+                .map(t -> t.getDeletedAt() == null &&
+                        t.getPlanedEndTime().compareTo(subscriptionTime) > 0 &&
+                        !t.getSpeakerId().equals(attendeeId))
+                .orElse(false);
     }
 }

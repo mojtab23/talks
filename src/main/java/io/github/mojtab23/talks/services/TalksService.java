@@ -17,4 +17,6 @@ public interface TalksService {
     String registerTalk(RegisterTalkDto dto);
 
     Optional<TalkDto> getTalkById(String id);
+
+    String subscribeToTalk(String talkId, String attendeeId);
 }
