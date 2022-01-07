@@ -22,5 +22,12 @@
     "roles": [
       "ATTENDEE"
     ]
+  },
+  {
+    "id": "u_4",
+    "name": "User Admin Only",
+    "roles": [
+      "ADMIN"
+    ]
   }
 ]
