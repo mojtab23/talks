@@ -142,6 +142,26 @@ public class TalksIntegrationTests {
 
     }
 
+    @Test
+    void getTalksBySpeaker() throws Exception {
+
+
+        final ResponseEntity<HelperPage> entity = restTemplate.exchange(
+                "http://localhost:" + port + "/talks/speaker/{id}",
+                HttpMethod.GET,
+                HttpEntity.EMPTY,
+                HelperPage.class,
+                "u_1"
+        );
+
+        assertThat(entity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(entity.getBody()).isNotNull();
+        assertThat(entity.getBody().getNumberOfElements()).isEqualTo(2);
+        assertThat(entity.getBody().stream().map(TalkDto::getId).collect(Collectors.toList())).contains("t_1", "t_3");
+
+
+    }
+
 
     @AfterEach
     void tearDown() {
