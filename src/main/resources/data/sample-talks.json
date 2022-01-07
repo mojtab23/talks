@@ -1,0 +1,41 @@
+[
+  {
+    "id": "t_1",
+    "title": "First Talk",
+    "description": "This is the First Talk!",
+    "speakerId": "u_1",
+    "createdAt": "2022-01-05T16:28:14.679266200Z",
+    "updatedAt": "2022-01-05T16:28:14.679266200Z",
+    "deletedAt": null,
+    "planedStartTime": "1970-01-01T00:00:00Z",
+    "planedEndTime": "1970-01-01T00:30:00Z",
+    "startedAt": "2022-01-05T16:28:14.679266200Z",
+    "endedAt": "2022-01-05T16:48:14.679266200Z"
+  },
+  {
+    "id": "t_2",
+    "title": "Second Talk",
+    "description": "This is the Second Talk!",
+    "speakerId": "u_2",
+    "createdAt": "2022-01-05T16:28:14.679266200Z",
+    "updatedAt": "2022-01-05T16:28:14.679266200Z",
+    "deletedAt": null,
+    "planedStartTime": "1970-01-02T00:00:00Z",
+    "planedEndTime": "1970-01-02T01:00:00Z",
+    "startedAt": null,
+    "endedAt": null
+  },
+  {
+    "id": "t_3",
+    "title": "Third Talk",
+    "description": "This is the 3rd Talk!",
+    "speakerId": "u_1",
+    "createdAt": "2022-01-05T16:28:14.679266200Z",
+    "updatedAt": "2022-01-05T16:28:14.679266200Z",
+    "deletedAt": null,
+    "planedStartTime": "1970-01-01T02:00:00Z",
+    "planedEndTime": "1970-01-01T02:30:00Z",
+    "startedAt": null,
+    "endedAt": null
+  }
+]

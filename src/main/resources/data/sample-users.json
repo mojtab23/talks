@@ -1,0 +1,33 @@
+[
+  {
+    "id": "u_1",
+    "name": "User One",
+    "roles": [
+      "ADMIN",
+      "ATTENDEE",
+      "SPEAKER"
+    ]
+  },
+  {
+    "id": "u_2",
+    "name": "User Speaker",
+    "roles": [
+      "ATTENDEE",
+      "SPEAKER"
+    ]
+  },
+  {
+    "id": "u_3",
+    "name": "User Attendee",
+    "roles": [
+      "ATTENDEE"
+    ]
+  },
+  {
+    "id": "u_4",
+    "name": "User Admin Only",
+    "roles": [
+      "ADMIN"
+    ]
+  }
+]

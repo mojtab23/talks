@@ -1,4 +1,4 @@
-GET http://localhost:8080/talks/search?title=First&description=the&speakerId=u_1&planedStartFrom=1970-01-01T00:00:00.000-00:00&planedStartTo=1970-01-02T00:00:00.000-00:00&planedEndFrom=1971-01-01T00:10:00.000-00:00&planedEndTo=1971-01-01T00:40:00.000-00:00&startedFrom=2022-01-05T16:00:00.000-00:00&startedTo=2022-01-05T16:30:00.000-00:00&endedFrom=2022-01-05T16:30:00.000-00:00&endedTo=2022-01-05T17:00:00.000-00:00
+GET http://localhost:8080/talks/search?title=First&description=the&speakerId=u_1&planedStartFrom=1970-01-01T00:00:00.000-00:00&planedStartTo=1970-01-02T00:00:00.000-00:00&planedEndFrom=1970-01-01T00:10:00.000-00:00&planedEndTo=1970-01-01T00:40:00.000-00:00&startedFrom=2022-01-05T16:00:00.000-00:00&startedTo=2022-01-05T16:30:00.000-00:00&endedFrom=2022-01-05T16:30:00.000-00:00&endedTo=2022-01-05T17:00:00.000-00:00
 Accept: application/json
 
 ###
