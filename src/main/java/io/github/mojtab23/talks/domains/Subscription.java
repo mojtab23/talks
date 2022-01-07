@@ -5,8 +5,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-@CompoundIndex(def = "{'attendeeId': 1, 'talkId': 1}")
 @Document
+@CompoundIndex(name = "attendee_talk_unique", def = "{'attendeeId': 1, 'talkId': 1}", unique = true)
 public class Subscription {
     private String id;
     private String attendeeId;

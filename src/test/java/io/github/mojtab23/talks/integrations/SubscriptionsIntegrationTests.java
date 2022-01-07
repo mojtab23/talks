@@ -1,5 +1,6 @@
 package io.github.mojtab23.talks.integrations;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mojtab23.talks.domains.Subscription;
 import io.github.mojtab23.talks.domains.Talk;
@@ -77,6 +78,33 @@ public class SubscriptionsIntegrationTests {
         assertThat(uri.toString()).contains("/talks/");
         assertThat(entity.getBody()).isNotNull();
         return entity.getBody().getId();
+    }
+
+    @Test
+    public void subscribeTwiceToATalkFails() {
+
+        final Instant now = Instant.now();
+        final String talkId = createANewTalk(now);
+
+        final ResponseEntity<JsonNode> entity = restTemplate.postForEntity(
+                "http://localhost:" + port + "/talks/" + talkId + "/subscribers",
+                "u_3",
+                JsonNode.class
+        );
+        assertThat(entity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(entity.getBody()).isNotNull();
+        assertThat(entity.getBody().isEmpty()).isFalse();
+        final String firstId = entity.getBody().get("subscriptionId").asText();
+        assertThat(firstId).isNotBlank();
+
+
+        final ResponseEntity<JsonNode> entity2 = restTemplate.postForEntity(
+                "http://localhost:" + port + "/talks/" + talkId + "/subscribers",
+                "u_3",
+                JsonNode.class
+        );
+        assertThat(entity2.getBody()).isNotNull();
+        assertThat(entity2.getStatusCodeValue()).isNotEqualTo(200);
     }
 
     @Test

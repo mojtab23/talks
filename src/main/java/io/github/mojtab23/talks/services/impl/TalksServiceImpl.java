@@ -1,5 +1,6 @@
 package io.github.mojtab23.talks.services.impl;
 
+import com.mongodb.MongoException;
 import io.github.mojtab23.talks.domains.Subscription;
 import io.github.mojtab23.talks.domains.Talk;
 import io.github.mojtab23.talks.domains.UserRole;
@@ -92,7 +93,12 @@ public class TalksServiceImpl implements TalksService {
         }
 
         final Subscription subscription = new Subscription(null, attendeeId, talkId, now, null);
-        final Subscription savedSubscription = subscriptionsRepository.save(subscription);
+        final Subscription savedSubscription;
+        try {
+            savedSubscription = subscriptionsRepository.save(subscription);
+        } catch (MongoException e) {
+            return null;
+        }
         return savedSubscription.getId();
     }
 
