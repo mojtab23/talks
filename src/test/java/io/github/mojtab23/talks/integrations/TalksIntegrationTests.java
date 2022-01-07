@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 public class TalksIntegrationTests {
-    private static final File SAMPLE_JSON = Paths.get("src", "test", "resources", "data", "sample.json").toFile();
+    private static final File SAMPLE_JSON = Paths.get("src", "test", "resources", "data", "sample-talks.json").toFile();
     @LocalServerPort
     private int port;
     @Autowired
@@ -57,6 +57,7 @@ public class TalksIntegrationTests {
         final ResponseEntity<TalkDto> entity = restTemplate.getForEntity(uri, TalkDto.class);
 
         assertThat(uri.toString()).contains("/talks/");
+        assertThat(entity.getBody()).isNotNull();
         assertThat(entity.getBody().getSpeakerId()).isEqualTo("u_1");
         assertThat(entity.getBody().getPlanedStartTime()).isEqualTo(Instant.EPOCH.plus(2, ChronoUnit.DAYS));
     }

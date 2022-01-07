@@ -2,8 +2,8 @@ package io.github.mojtab23.talks.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mojtab23.talks.dtos.RegisterUserDto;
-import io.github.mojtab23.talks.services.UsersService;
 import io.github.mojtab23.talks.dtos.UserDto;
+import io.github.mojtab23.talks.services.UsersService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -84,7 +85,7 @@ class UsersControllerTest {
 
         final String body = mapper.writeValueAsString(user);
 
-        when(usersService.getUser("u_1")).thenReturn(user);
+        when(usersService.getUser("u_1")).thenReturn(Optional.of(user));
 
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/u_1").contentType(MediaType.APPLICATION_JSON))
@@ -92,10 +93,11 @@ class UsersControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json(body))
                 .andDo(print());
     }
+
     @DisplayName("get user returns not found when user not exists")
     @Test
     void testGetUserNotFound() throws Exception {
-        when(usersService.getUser("u_not")).thenReturn(null);
+        when(usersService.getUser("u_not")).thenReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/u_not").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())

@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class TalksRepositoryTest {
-    private static final File SAMPLE_JSON = Paths.get("src", "test", "resources", "data", "sample.json").toFile();
+    private static final File SAMPLE_JSON = Paths.get("src", "test", "resources", "data", "sample-talks.json").toFile();
 
     @Autowired
     private ObjectMapper mapper;

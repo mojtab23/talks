@@ -14,6 +14,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class UsersController {
@@ -36,11 +37,11 @@ public class UsersController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable String id) {
-        final UserDto user = usersService.getUser(id);
-        if (user == null) {
+        final Optional<UserDto> user = usersService.getUser(id);
+        if (user.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(user.get());
     }
 
     @GetMapping("/users")

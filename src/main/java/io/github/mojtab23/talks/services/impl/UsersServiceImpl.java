@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,8 +36,8 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserDto getUser(String id) {
-        return null;
+    public Optional<UserDto> getUser(String id) {
+        return usersRepository.findById(id).map(UserDto::fromUser);
     }
 
     @Override
