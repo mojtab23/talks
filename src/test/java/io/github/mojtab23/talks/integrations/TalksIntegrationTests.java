@@ -123,7 +123,7 @@ public class TalksIntegrationTests {
     }
 
     @Test
-    void getTalksInADateRange() throws Exception {
+    void getTalksInADateRange() {
 
 
         final ResponseEntity<HelperPage> entity = restTemplate.exchange(
@@ -204,7 +204,7 @@ public class TalksIntegrationTests {
     }
 
     @Test
-    void getTalksBySpeaker() throws Exception {
+    void getTalksBySpeaker() {
 
 
         final ResponseEntity<HelperPage> entity = restTemplate.exchange(

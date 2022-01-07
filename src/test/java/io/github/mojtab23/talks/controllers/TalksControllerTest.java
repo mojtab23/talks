@@ -27,7 +27,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-//@ExtendWith(SpringExtension.class)
 @WebMvcTest(TalksController.class)
 class TalksControllerTest {
 
@@ -59,7 +58,6 @@ class TalksControllerTest {
                         .param("page", "0")
                         .param("size", "10")
                         .param("sort", "id,desc") // <-- no space after comma!!!
-//                        .param("sort", "name,asc")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(jsonPath("$.content", hasSize(2))).andDo(print());
 

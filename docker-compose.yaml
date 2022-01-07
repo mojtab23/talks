@@ -2,16 +2,12 @@ version: "3.8"
 services:
   mongodb:
     image : mongo:4
-#    container_name: mongodb
-#    hostname: mongodb
     networks:
       - mynet
     restart: on-failure
     environment:
       - PUID=1000
       - PGID=1000
-#      - MONGO_INITDB_ROOT_USERNAME=mongo
-#      - MONGO_INITDB_ROOT_PASSWORD=mongo
       - MONGO_INITDB_DATABASE=talks_test
       - MONGO_REPLICA_SET_NAME=rs0
     ports:
