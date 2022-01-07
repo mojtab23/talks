@@ -1,6 +1,7 @@
 package io.github.mojtab23.talks.domains;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Set;
 
@@ -8,13 +9,14 @@ import java.util.Set;
 public class User {
 
     private String id;
+    @Field
     private String name;
-    private Set<String> roles;
+    private Set<UserRole> roles;
 
     public User() {
     }
 
-    public User(String id, String name, Set<String> roles) {
+    public User(String id, String name, Set<UserRole> roles) {
         this.id = id;
         this.name = name;
         this.roles = roles;
@@ -36,11 +38,11 @@ public class User {
         this.name = name;
     }
 
-    public Set<String> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 

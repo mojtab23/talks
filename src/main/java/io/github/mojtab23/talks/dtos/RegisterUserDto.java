@@ -1,6 +1,7 @@
 package io.github.mojtab23.talks.dtos;
 
 import io.github.mojtab23.talks.domains.User;
+import io.github.mojtab23.talks.domains.UserRole;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
@@ -9,12 +10,12 @@ public class RegisterUserDto {
 
     @NotBlank(message = "Name is mandatory")
     private String name;
-    private Set<String> roles;
+    private Set<UserRole> roles;
 
     public RegisterUserDto() {
     }
 
-    public RegisterUserDto(String name, Set<String> roles) {
+    public RegisterUserDto(String name, Set<UserRole> roles) {
         this.name = name;
         this.roles = roles;
     }
@@ -28,11 +29,11 @@ public class RegisterUserDto {
         this.name = name;
     }
 
-    public Set<String> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 

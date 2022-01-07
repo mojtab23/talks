@@ -1,6 +1,7 @@
 package io.github.mojtab23.talks.dtos;
 
 import io.github.mojtab23.talks.domains.User;
+import io.github.mojtab23.talks.domains.UserRole;
 
 import java.util.Objects;
 import java.util.Set;
@@ -8,12 +9,12 @@ import java.util.Set;
 public class UserDto {
     private String id;
     private String name;
-    private Set<String> roles;
+    private Set<UserRole> roles;
 
     public UserDto() {
     }
 
-    public UserDto(String id, String name, Set<String> roles) {
+    public UserDto(String id, String name, Set<UserRole> roles) {
         this.id = id;
         this.name = name;
         this.roles = roles;
@@ -39,11 +40,11 @@ public class UserDto {
         this.name = name;
     }
 
-    public Set<String> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 

@@ -2,6 +2,7 @@ package io.github.mojtab23.talks.integrations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mojtab23.talks.domains.User;
+import io.github.mojtab23.talks.domains.UserRole;
 import io.github.mojtab23.talks.dtos.RegisterUserDto;
 import io.github.mojtab23.talks.dtos.UserDto;
 import org.junit.jupiter.api.AfterEach;
@@ -46,7 +47,7 @@ public class UsersIntegrationTests {
 
     @Test
     public void registerAUser() {
-        final RegisterUserDto userDto = new RegisterUserDto("test user", Collections.singleton("Attendee"));
+        final RegisterUserDto userDto = new RegisterUserDto("test user", Collections.singleton(UserRole.ATTENDEE));
         final URI uri = restTemplate.postForLocation("http://localhost:" + port + "/users/", userDto);
 
         assertThat(uri).isNotNull();

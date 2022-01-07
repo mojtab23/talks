@@ -1,6 +1,7 @@
 package io.github.mojtab23.talks.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mojtab23.talks.domains.UserRole;
 import io.github.mojtab23.talks.dtos.RegisterUserDto;
 import io.github.mojtab23.talks.dtos.UserDto;
 import io.github.mojtab23.talks.services.UsersService;
@@ -39,7 +40,7 @@ class UsersControllerTest {
     @Test
     void testRegisterUser() throws Exception {
 
-        Set<String> roles = new HashSet<>(Arrays.asList("Admin", "Attendee", "Speaker"));
+        Set<UserRole> roles = new HashSet<>(Arrays.asList(UserRole.ADMIN, UserRole.ATTENDEE, UserRole.SPEAKER));
 
 
         final RegisterUserDto dto = new RegisterUserDto("Mojtaba", roles);
@@ -59,7 +60,7 @@ class UsersControllerTest {
     @Test
     void testErrorInvalidRegisterUser() throws Exception {
 
-        Set<String> roles = new HashSet<>(Arrays.asList("Admin", "Attendee", "Speaker"));
+        Set<UserRole> roles = new HashSet<>(Arrays.asList(UserRole.ADMIN, UserRole.ATTENDEE, UserRole.SPEAKER));
 
 
         final RegisterUserDto dto = new RegisterUserDto("\t", roles);
@@ -78,7 +79,7 @@ class UsersControllerTest {
 
     @Test
     void testGetUser() throws Exception {
-        Set<String> roles = new HashSet<>(Arrays.asList("Admin", "Attendee", "Speaker"));
+        Set<UserRole> roles = new HashSet<>(Arrays.asList(UserRole.ADMIN, UserRole.ATTENDEE, UserRole.SPEAKER));
 
 
         final UserDto user = new UserDto("u_1", "Mojtaba", roles);

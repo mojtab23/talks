@@ -3,24 +3,24 @@
     "id": "u_1",
     "name": "User One",
     "roles": [
-      "Admin",
-      "Attendee",
-      "Speaker"
+      "ADMIN",
+      "ATTENDEE",
+      "SPEAKER"
     ]
   },
   {
     "id": "u_2",
     "name": "User Speaker",
     "roles": [
-      "Attendee",
-      "Speaker"
+      "ATTENDEE",
+      "SPEAKER"
     ]
   },
   {
     "id": "u_3",
     "name": "User Attendee",
     "roles": [
-      "Attendee"
+      "ATTENDEE"
     ]
   }
 ]
