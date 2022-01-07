@@ -1,6 +1,7 @@
 package io.github.mojtab23.talks.integrations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mojtab23.talks.domains.Subscription;
 import io.github.mojtab23.talks.domains.Talk;
 import io.github.mojtab23.talks.domains.User;
 import io.github.mojtab23.talks.dtos.RegisterTalkDto;
@@ -139,6 +140,64 @@ public class TalksIntegrationTests {
         assertThat(entity.getBody().getNumberOfElements()).isEqualTo(2);
         assertThat(entity.getBody().stream().map(TalkDto::getId).collect(Collectors.toList())).contains("t_1", "t_3");
 
+
+    }
+
+    @Test
+    void searchTalks() {
+
+
+        final ResponseEntity<TalkDto[]> entity = restTemplate.exchange(
+                "http://localhost:" + port + "/talks/search?" +
+                        "title=First&" +
+                        "description=the&" +
+                        "speakerId=u_1&" +
+                        "planedStartFrom=1970-01-01T00:00:00.000-00:00&" +
+                        "planedStartTo=1970-01-02T00:00:00.000-00:00&" +
+                        "planedEndFrom=1970-01-01T00:10:00.000-00:00&" +
+                        "planedEndTo=1970-01-01T00:40:00.000-00:00&" +
+                        "startedFrom=2022-01-05T16:00:00.000-00:00&" +
+                        "startedTo=2022-01-05T16:30:00.000-00:00&" +
+                        "endedFrom=2022-01-05T16:30:00.000-00:00&" +
+                        "endedTo=2022-01-05T17:00:00.000-00:00",
+                HttpMethod.GET,
+                HttpEntity.EMPTY,
+                TalkDto[].class
+        );
+
+        assertThat(entity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(entity.getBody()).isNotNull();
+        assertThat(entity.getBody().length).isEqualTo(1);
+        assertThat(entity.getBody()[0].getId()).contains("t_1");
+
+
+    }    @Test
+    void searchTalksFindNone() {
+
+
+        final ResponseEntity<TalkDto[]> entity = restTemplate.exchange(
+                "http://localhost:" + port + "/talks/search?" +
+                        "title=First&" +
+                        "description=the&" +
+                        "speakerId=u_1&" +
+                        "planedStartFrom=1970-01-01T00:00:00.000-00:00&" +
+                        "planedStartTo=1970-01-02T00:00:00.000-00:00&" +
+                        // -- Date range changed to 1971 so can't find the talk
+                        "planedEndFrom=1971-01-01T00:10:00.000-00:00&" +
+                        "planedEndTo=1971-01-01T00:40:00.000-00:00&" +
+                        // --
+                        "startedFrom=2022-01-05T16:00:00.000-00:00&" +
+                        "startedTo=2022-01-05T16:30:00.000-00:00&" +
+                        "endedFrom=2022-01-05T16:30:00.000-00:00&" +
+                        "endedTo=2022-01-05T17:00:00.000-00:00",
+                HttpMethod.GET,
+                HttpEntity.EMPTY,
+                TalkDto[].class
+        );
+
+        assertThat(entity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(entity.getBody()).isNotNull();
+        assertThat(entity.getBody().length).isEqualTo(0);
 
     }
 
