@@ -1,7 +1,9 @@
 package io.github.mojtab23.talks.repositories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mojtab23.talks.domains.Subscription;
 import io.github.mojtab23.talks.domains.Talk;
+import io.github.mojtab23.talks.domains.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,6 +48,8 @@ class TalksRepositoryTest {
     @AfterEach
     void tearDown() {
         mongoTemplate.dropCollection(Talk.class);
+        mongoTemplate.dropCollection(User.class);
+        mongoTemplate.remove(Subscription.class).all();
     }
 
     @Test

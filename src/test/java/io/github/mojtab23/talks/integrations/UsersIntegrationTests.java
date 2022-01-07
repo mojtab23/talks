@@ -1,6 +1,8 @@
 package io.github.mojtab23.talks.integrations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.mojtab23.talks.domains.Subscription;
+import io.github.mojtab23.talks.domains.Talk;
 import io.github.mojtab23.talks.domains.User;
 import io.github.mojtab23.talks.domains.UserRole;
 import io.github.mojtab23.talks.dtos.RegisterUserDto;
@@ -63,7 +65,9 @@ public class UsersIntegrationTests {
 
     @AfterEach
     void tearDown() {
+        mongoTemplate.dropCollection(Talk.class);
         mongoTemplate.dropCollection(User.class);
+        mongoTemplate.remove(Subscription.class).all();
     }
 
 }

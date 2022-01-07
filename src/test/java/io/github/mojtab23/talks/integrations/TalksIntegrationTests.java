@@ -226,6 +226,7 @@ public class TalksIntegrationTests {
     void tearDown() {
         mongoTemplate.dropCollection(Talk.class);
         mongoTemplate.dropCollection(User.class);
+        mongoTemplate.remove(Subscription.class).all();
     }
 
 }

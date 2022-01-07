@@ -138,7 +138,7 @@ public class SubscriptionsIntegrationTests {
     void tearDown() {
         mongoTemplate.dropCollection(Talk.class);
         mongoTemplate.dropCollection(User.class);
-        mongoTemplate.dropCollection(Subscription.class);
+        mongoTemplate.remove(Subscription.class).all();
     }
 
 }
