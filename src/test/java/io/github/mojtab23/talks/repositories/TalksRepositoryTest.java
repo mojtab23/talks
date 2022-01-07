@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -54,9 +56,9 @@ class TalksRepositoryTest {
 
     @Test
     void testFindTalksBetweenDates() {
-        final List<Talk> talks = talksRepository.findTalksBetween(Instant.EPOCH, Instant.EPOCH.plus(1, ChronoUnit.HOURS));
-        assertEquals(1, talks.size(), "Should be one talk in the database");
-        assertEquals("t_1", talks.get(0).getId());
+        final Page<Talk> talks = talksRepository.findTalksBetween(Instant.EPOCH, Instant.EPOCH.plus(1, ChronoUnit.HOURS), PageRequest.of(0, 10));
+        assertEquals(1, talks.getNumberOfElements(), "Should be one talk in the database");
+        assertEquals("t_1", talks.getContent().get(0).getId());
     }
 
     @Test

@@ -5,12 +5,15 @@ import io.github.mojtab23.talks.dtos.TalkDto;
 import io.github.mojtab23.talks.services.TalksService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -24,8 +27,14 @@ public class TalksController {
     }
 
     @GetMapping("/talks")
-    public ResponseEntity<Page<TalkDto>> getAllTalks(@NotNull final Pageable pageable) {
-        return ResponseEntity.ok(talksService.getAllTalks(pageable));
+    public ResponseEntity<Page<TalkDto>> getAllTalks(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date from,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date to,
+            @NotNull final Pageable pageable
+    ) {
+        final Instant f = from != null ? from.toInstant() : Instant.MIN;
+        final Instant t = to != null ? to.toInstant() : Instant.MAX;
+        return ResponseEntity.ok(talksService.getAllTalks(f, t, pageable));
     }
 
     @GetMapping("/talks/{id}")

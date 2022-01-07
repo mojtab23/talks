@@ -53,7 +53,7 @@ class TalksControllerTest {
         secondTalk.setId("t_2");
         talkList.add(secondTalk);
 
-        when(talksService.getAllTalks(any())).thenReturn(new PageImpl<>(talkList));
+        when(talksService.getAllTalks(any(), any(), any())).thenReturn(new PageImpl<>(talkList));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/talks")
                         .param("page", "0")
@@ -64,7 +64,7 @@ class TalksControllerTest {
         ).andExpect(jsonPath("$.content", hasSize(2))).andDo(print());
 
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
-        verify(talksService).getAllTalks(pageableCaptor.capture());
+        verify(talksService).getAllTalks(any(), any(), pageableCaptor.capture());
         PageRequest pageable = (PageRequest) pageableCaptor.getValue();
 
         assertEquals(pageable.getPageNumber(), 0);

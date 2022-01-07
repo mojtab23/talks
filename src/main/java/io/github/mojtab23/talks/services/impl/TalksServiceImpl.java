@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -27,8 +28,8 @@ public class TalksServiceImpl implements TalksService {
     }
 
     @Override
-    public Page<TalkDto> getAllTalks(Pageable pageable) {
-        return talksRepository.findAll(pageable).map(TalkDto::fromTalk);
+    public Page<TalkDto> getAllTalks(Instant from, Instant to, Pageable pageable) {
+        return talksRepository.findTalksBetween(from, to, pageable).map(TalkDto::fromTalk);
     }
 
     @Override

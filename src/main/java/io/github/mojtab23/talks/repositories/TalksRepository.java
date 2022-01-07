@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.time.Instant;
-import java.util.List;
 
 public interface TalksRepository extends MongoRepository<Talk, String> {
 
@@ -29,7 +28,7 @@ public interface TalksRepository extends MongoRepository<Talk, String> {
             "\n" +
             "        }]\n" +
             "}")
-    List<Talk> findTalksBetween(Instant start, Instant end);
+    Page<Talk> findTalksBetween(Instant start, Instant end, Pageable pageable);
 
     @Query(value = "{\n" +
             "    $or: [\n" +

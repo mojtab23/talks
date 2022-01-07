@@ -5,6 +5,7 @@ import io.github.mojtab23.talks.domains.Talk;
 import io.github.mojtab23.talks.domains.User;
 import io.github.mojtab23.talks.dtos.RegisterTalkDto;
 import io.github.mojtab23.talks.dtos.TalkDto;
+import io.github.mojtab23.talks.helper.HelperPage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -25,6 +28,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -115,6 +119,27 @@ public class TalksIntegrationTests {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody()).contains("can't insert the talk");
+    }
+
+    @Test
+    void getTalksInADateRange() throws Exception {
+
+
+        final ResponseEntity<HelperPage> entity = restTemplate.exchange(
+                "http://localhost:" + port + "/talks?from={f}&to={t}",
+                HttpMethod.GET,
+                HttpEntity.EMPTY,
+                HelperPage.class,
+                "1970-01-01T00:00:00.000-00:00",
+                "1970-01-02T00:00:00.000-00:00"
+        );
+
+        assertThat(entity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(entity.getBody()).isNotNull();
+        assertThat(entity.getBody().getNumberOfElements()).isEqualTo(2);
+        assertThat(entity.getBody().stream().map(TalkDto::getId).collect(Collectors.toList())).contains("t_1", "t_3");
+
+
     }
 
 
